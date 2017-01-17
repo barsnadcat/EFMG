@@ -12,6 +12,11 @@ class AEFMGGameMode : public AGameModeBase
 
 public:
 	AEFMGGameMode();
+
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	void ObstacleTimer();
+
 };
 
 
