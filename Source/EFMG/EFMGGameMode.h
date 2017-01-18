@@ -9,7 +9,8 @@ UCLASS(minimalapi)
 class AEFMGGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-
+private:
+	FTimerHandle obstacleTimerHandle;
 public:
 	AEFMGGameMode();
 

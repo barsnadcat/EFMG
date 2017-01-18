@@ -3,6 +3,7 @@
 #include "EFMG.h"
 #include "EFMGGameMode.h"
 #include "EFMGPawn.h"
+#include ""
 
 AEFMGGameMode::AEFMGGameMode()
 {
@@ -15,11 +16,11 @@ AEFMGGameMode::AEFMGGameMode()
 void AEFMGGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	//World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AEFMGGameMode::ObstacleTimer, FireRate);
+	//World->GetTimerManager().SetTimer(obstacleTimerHandle, this, &AEFMGGameMode::ObstacleTimer, 1);
 
 }
 
 void AEFMGGameMode::ObstacleTimer()
 {
-	//World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AEFMGGameMode::ObstacleTimer, FireRate);
+	//World->GetTimerManager().SetTimer(obstacleTimerHandle, this, &AEFMGGameMode::ObstacleTimer, 1);
 }
