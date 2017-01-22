@@ -108,18 +108,16 @@ void AEFMGPawn::FireShot(FVector FireDirection)
 			{
 				// spawn the projectile
 				World->SpawnActor<AEFMGProjectile>(SpawnLocation, FireRotation);
+				World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AEFMGPawn::ShotTimerExpired, FireRate);
+
+				// try and play the sound if specified
+				if (FireSound != nullptr)
+				{
+					UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+				}
+
+				bCanFire = false;
 			}
-
-			bCanFire = false;
-			World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AEFMGPawn::ShotTimerExpired, FireRate);
-
-			// try and play the sound if specified
-			if (FireSound != nullptr)
-			{
-				UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
-			}
-
-			bCanFire = false;
 		}
 	}
 }
