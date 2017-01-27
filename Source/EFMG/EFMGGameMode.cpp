@@ -24,11 +24,17 @@ void AEFMGGameMode::ObstacleTimer()
 	UWorld* const world = GetWorld();
 	if (world)
 	{
-		world->GetTimerManager().SetTimer(obstacleTimerHandle, this, &AEFMGGameMode::ObstacleTimer, 1);
-		const FRotator spawnRotation(0, 180, 0);
-		const FVector spawnLocation;
-		world->SpawnActor<AObstacle>(spawnLocation, spawnRotation);
-		UE_LOG(LogTemp, Log, TEXT("Obstacle!"));
+		UClass* obstacleClass = LoadObject<UClass>(NULL, TEXT("/Game/Obstacle1.Obstacle1"));
+		if (obstacleClass)
+		{
+			world->GetTimerManager().SetTimer(obstacleTimerHandle, this, &AEFMGGameMode::ObstacleTimer, 1);
+			const FRotator spawnRotation(0, 180, 0);
+			const FVector spawnLocation;
+			//world->SpawnActor<AObstacle>(spawnLocation, spawnRotation);
+			world->SpawnActor(obstacleClass, &spawnLocation, &spawnRotation);
+		}
+		else
+			UE_LOG(LogTemp, Log, TEXT("Failed!"));
 	}
-		
+
 }
