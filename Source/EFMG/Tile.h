@@ -3,7 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Obstacle.generated.h"
+#include "Tile.generated.h"
 
 class UProjectileMovementComponent;
 class UStaticMeshComponent;

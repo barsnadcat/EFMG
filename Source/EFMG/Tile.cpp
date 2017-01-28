@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EFMG.h"
-#include "Obstacle.h"
+#include "Tile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
