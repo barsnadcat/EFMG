@@ -11,6 +11,7 @@ class AEFMGGameMode : public AGameModeBase
 	GENERATED_BODY()
 private:
 	FTimerHandle obstacleTimerHandle;
+	UClass* obstacleClass = NULL;
 public:
 	AEFMGGameMode();
 

@@ -10,6 +10,8 @@ AEFMGGameMode::AEFMGGameMode()
 	// set default pawn class to our character class
 	DefaultPawnClass = AEFMGPawn::StaticClass();
 	PrimaryActorTick.bCanEverTick = true;
+	static ConstructorHelpers::FClassFinder<AActor> obstacleClassFinder(TEXT("/Game/Obstacle1"));
+	obstacleClass = obstacleClassFinder.Class;
 }
 
 // Called when the game starts or when spawned
@@ -24,7 +26,6 @@ void AEFMGGameMode::ObstacleTimer()
 	UWorld* const world = GetWorld();
 	if (world)
 	{
-		UClass* obstacleClass = LoadObject<UClass>(NULL, TEXT("/Game/Obstacle1.Obstacle1"));
 		if (obstacleClass)
 		{
 			world->GetTimerManager().SetTimer(obstacleTimerHandle, this, &AEFMGGameMode::ObstacleTimer, 1);
