@@ -5,7 +5,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
-AObstacle::AObstacle()
+ATile::ATile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -35,14 +35,14 @@ AObstacle::AObstacle()
 }
 
 // Called when the game starts or when spawned
-void AObstacle::BeginPlay()
+void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void AObstacle::Tick( float DeltaTime )
+void ATile::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 

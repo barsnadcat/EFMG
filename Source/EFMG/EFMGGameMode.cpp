@@ -10,29 +10,28 @@ AEFMGGameMode::AEFMGGameMode()
 	// set default pawn class to our character class
 	DefaultPawnClass = AEFMGPawn::StaticClass();
 	PrimaryActorTick.bCanEverTick = true;
-	static ConstructorHelpers::FClassFinder<AActor> obstacleClassFinder(TEXT("/Game/Obstacle1"));
-	obstacleClass = obstacleClassFinder.Class;
+	static ConstructorHelpers::FClassFinder<AActor> tileClassFinder(TEXT("/Game/Tiles/Tile_00"));
+	tileClass = tileClassFinder.Class;
 }
 
 // Called when the game starts or when spawned
 void AEFMGGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorld()->GetTimerManager().SetTimer(obstacleTimerHandle, this, &AEFMGGameMode::ObstacleTimer, 1);
+	GetWorld()->GetTimerManager().SetTimer(courseTimerHandle, this, &AEFMGGameMode::CourseTimer, 1);
 }
 
-void AEFMGGameMode::ObstacleTimer()
+void AEFMGGameMode::CourseTimer()
 {
 	UWorld* const world = GetWorld();
 	if (world)
 	{
-		if (obstacleClass)
+		if (tileClass)
 		{
-			world->GetTimerManager().SetTimer(obstacleTimerHandle, this, &AEFMGGameMode::ObstacleTimer, 1);
+			world->GetTimerManager().SetTimer(courseTimerHandle, this, &AEFMGGameMode::CourseTimer, 1);
 			const FRotator spawnRotation(0, 180, 0);
 			const FVector spawnLocation;
-			//world->SpawnActor<AObstacle>(spawnLocation, spawnRotation);
-			world->SpawnActor(obstacleClass, &spawnLocation, &spawnRotation);
+			world->SpawnActor(tileClass, &spawnLocation, &spawnRotation);
 		}
 		else
 			UE_LOG(LogTemp, Log, TEXT("Failed!"));

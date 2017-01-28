@@ -10,14 +10,14 @@ class AEFMGGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 private:
-	FTimerHandle obstacleTimerHandle;
-	UClass* obstacleClass = NULL;
+	FTimerHandle courseTimerHandle;
+	UClass* tileClass = NULL;
 public:
 	AEFMGGameMode();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	void ObstacleTimer();
+	void CourseTimer();
 
 };
 

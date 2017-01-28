@@ -9,7 +9,7 @@ class UProjectileMovementComponent;
 class UStaticMeshComponent;
 
 UCLASS()
-class EFMG_API AObstacle : public AActor
+class EFMG_API ATile : public AActor
 {
 	GENERATED_BODY()
 
@@ -24,7 +24,7 @@ class EFMG_API AObstacle : public AActor
 	
 public:	
 	// Sets default values for this actor's properties
-	AObstacle();
+	ATile();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
