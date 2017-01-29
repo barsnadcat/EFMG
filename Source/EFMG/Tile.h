@@ -5,8 +5,6 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
-class UProjectileMovementComponent;
-class UStaticMeshComponent;
 
 UCLASS()
 class EFMG_API ATile : public AActor
@@ -22,7 +20,5 @@ public:
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
-private:
-	UProjectileMovementComponent* obstacleMovement;
 	
 };
