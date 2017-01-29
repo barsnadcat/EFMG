@@ -10,26 +10,16 @@ ATile::ATile()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	// Static reference to the mesh to use for the projectile
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> ProjectileMeshAsset(TEXT("/Game/TwinStick/Meshes/TwinStickProjectile.TwinStickProjectile"));
-
-	// Create mesh component for the projectile sphere
-	ObstacleMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMesh0"));
-	ObstacleMesh->SetStaticMesh(ProjectileMeshAsset.Object);
-	ObstacleMesh->SetupAttachment(RootComponent);
-	ObstacleMesh->BodyInstance.SetCollisionProfileName("Projectile");
-	RootComponent = ObstacleMesh;
-
 	// Use a ProjectileMovementComponent to govern this projectile's movement
-	ObstacleMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement0"));
-	ObstacleMovement->UpdatedComponent = ObstacleMesh;
-	ObstacleMovement->InitialSpeed = 3000.f;
-	ObstacleMovement->MaxSpeed = 3000.f;
-	ObstacleMovement->bRotationFollowsVelocity = true;
-	ObstacleMovement->bShouldBounce = false;
-	ObstacleMovement->ProjectileGravityScale = 0.f; // No gravity
+	obstacleMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement0"));
+	obstacleMovement->bAutoRegisterUpdatedComponent = true;
+	obstacleMovement->InitialSpeed = 3000.f;
+	obstacleMovement->MaxSpeed = 3000.f;
+	obstacleMovement->bRotationFollowsVelocity = true;
+	obstacleMovement->bShouldBounce = false;
+	obstacleMovement->ProjectileGravityScale = 0.f; // No gravity
 
-													  // Die after 3 seconds by default
+	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
 
 }

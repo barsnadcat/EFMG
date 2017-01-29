@@ -13,15 +13,6 @@ class EFMG_API ATile : public AActor
 {
 	GENERATED_BODY()
 
-	/** Sphere collision component */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Projectile, meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* ObstacleMesh;
-
-	/** Projectile movement component */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
-	UProjectileMovementComponent* ObstacleMovement;
-
-	
 public:	
 	// Sets default values for this actor's properties
 	ATile();
@@ -31,7 +22,7 @@ public:
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
-
-	
+private:
+	UProjectileMovementComponent* obstacleMovement;
 	
 };
