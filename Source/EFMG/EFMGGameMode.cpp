@@ -3,7 +3,6 @@
 #include "EFMG.h"
 #include "EFMGGameMode.h"
 #include "EFMGPawn.h"
-#include "Obstacle.h"
 
 AEFMGGameMode::AEFMGGameMode()
 {
