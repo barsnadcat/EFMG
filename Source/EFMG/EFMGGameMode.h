@@ -4,22 +4,22 @@
 #include "GameFramework/GameModeBase.h"
 #include "EFMGGameMode.generated.h"
 
-
 UCLASS(minimalapi)
 class AEFMGGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 private:
 	FTimerHandle courseTimerHandle;
-	UClass* tileClass = NULL;
+	UClass*      tileClass = NULL;
+
+	UPROPERTY()
+	TArray<AActor*> tiles;
 public:
+
 	AEFMGGameMode();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	void CourseTimer();
+	void         CourseTimer();
 
 };
-
-
-
