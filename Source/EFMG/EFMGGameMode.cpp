@@ -31,6 +31,7 @@ void AEFMGGameMode::CourseTimer()
 			const FRotator spawnRotation(0, 180, 0);
 			const FVector spawnLocation;
 			AActor* newTile = world->SpawnActor(tileClass, &spawnLocation, &spawnRotation);
+			tiles.Insert(newTile, 0);
 		}
 		else
 			UE_LOG(LogTemp, Log, TEXT("Failed!"));
