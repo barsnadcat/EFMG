@@ -38,3 +38,21 @@ void AEFMGGameMode::CourseTimer()
 	}
 
 }
+
+
+float AEFMGGameMode::GetTileLength(AActor* tile)
+{
+	TInlineComponentArray<UStaticMeshComponent*> meshes;
+	tile->GetComponents(meshes);
+	for (auto m : meshes)
+	{
+		FString terrainName = "Terrain";
+		if (m->GetName() == terrainName)
+		{
+			FVector min, max;
+			m->GetLocalBounds(min, max);
+			return max.X - min.X;
+		}
+	}
+	return 0;
+}
