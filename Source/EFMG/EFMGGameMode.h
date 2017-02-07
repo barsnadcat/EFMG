@@ -14,13 +14,15 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	void         CourseTimer();
+	virtual void Tick(float DeltaSeconds) override;
 private:
+	FBoxSphereBounds GetTileBounds(AActor* tile);
 	float GetTileLength(AActor* tile);
+	float GetTileTopEdge(AActor* tile);
+	void SpawnTile();
 private:
-	FTimerHandle courseTimerHandle;
 	UClass*      tileClass = NULL;
 
 	UPROPERTY()
-	TArray<AActor*> tiles;
+	TArray<AActor*> mTiles;
 };

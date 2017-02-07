@@ -17,30 +17,46 @@ AEFMGGameMode::AEFMGGameMode()
 void AEFMGGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorld()->GetTimerManager().SetTimer(courseTimerHandle, this, &AEFMGGameMode::CourseTimer, 1);
 }
 
-void AEFMGGameMode::CourseTimer()
+void AEFMGGameMode::Tick(float DeltaSeconds)
+{
+	// Move tiles
+	// Spawn tiles
+	if (mTiles.Num() == 0)
+		SpawnTile();
+	else
+	{
+		if (GetTileTopEdge(mTiles[0]) > 0)
+			SpawnTile();
+	}
+	// Remove bottom ones
+}
+
+void AEFMGGameMode::SpawnTile()
 {
 	UWorld* const world = GetWorld();
 	if (world)
 	{
 		if (tileClass)
 		{
-			world->GetTimerManager().SetTimer(courseTimerHandle, this, &AEFMGGameMode::CourseTimer, 1);
 			const FRotator spawnRotation(0, 180, 0);
 			const FVector spawnLocation;
 			AActor* newTile = world->SpawnActor(tileClass, &spawnLocation, &spawnRotation);
-			tiles.Insert(newTile, 0);
+			mTiles.Insert(newTile, 0);
 		}
-		else
-			UE_LOG(LogTemp, Log, TEXT("Failed!"));
 	}
 
 }
 
 
-float AEFMGGameMode::GetTileLength(AActor* tile)
+float AEFMGGameMode::GetTileTopEdge(AActor* tile)
+{
+	FBoxSphereBounds bounds = GetTileBounds(tile);
+	return bounds.Origin.X - bounds.BoxExtent.X;
+}
+
+FBoxSphereBounds AEFMGGameMode::GetTileBounds(AActor* tile)
 {
 	TInlineComponentArray<UStaticMeshComponent*> meshes;
 	tile->GetComponents(meshes);
@@ -48,11 +64,15 @@ float AEFMGGameMode::GetTileLength(AActor* tile)
 	{
 		FString terrainName = "Terrain";
 		if (m->GetName() == terrainName)
-		{
-			FVector min, max;
-			m->GetLocalBounds(min, max);
-			return max.X - min.X;
-		}
+			return m->Bounds;
 	}
-	return 0;
+
+	UE_LOG(LogTemp, Warning, TEXT("No Terrain named static mech in tile blueprint"));
+	return FBoxSphereBounds();
+}
+
+float AEFMGGameMode::GetTileLength(AActor* tile)
+{
+	FBoxSphereBounds bounds = GetTileBounds(tile);
+	return bounds.BoxExtent.X * 2;
 }
