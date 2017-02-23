@@ -19,6 +19,14 @@ void AEFMGGameMode::BeginPlay()
 	Super::BeginPlay();
 }
 
+void LogActorBounds(AActor* tile, bool colliding)
+{
+	FVector origin;
+	FVector boxExtent;
+	tile->GetActorBounds(colliding, origin, boxExtent);
+	UE_LOG(LogTemp, Warning, TEXT("Actor bounds (%d) origin %.2f %.2f %.2f boxExtent %.2f %.2f %.2f"), colliding, origin.X, origin.Y, origin.Z, boxExtent.X, boxExtent.Y, boxExtent.Z);
+}
+
 void AEFMGGameMode::Tick(float DeltaSeconds)
 {
 	// Move tiles
@@ -27,8 +35,18 @@ void AEFMGGameMode::Tick(float DeltaSeconds)
 		SpawnTile();
 	else
 	{
-		if (GetTileTopEdge(mTiles[0]) > 0)
-			SpawnTile();
+		AActor* tile = mTiles[0];
+		if (!tile->IsPendingKill())
+		{
+
+			FVector location = tile->GetActorLocation();
+			UE_LOG(LogTemp, Warning, TEXT("Location %.2f %2.f %2f"), location.X, location.Y, location.Z);
+			LogActorBounds(tile, true);
+			LogActorBounds(tile, false);
+		}
+
+		//if (GetTileTopEdge(mTiles[0]) > 0)
+		//	SpawnTile();
 	}
 	// Remove bottom ones
 }
@@ -49,7 +67,6 @@ void AEFMGGameMode::SpawnTile()
 
 }
 
-
 float AEFMGGameMode::GetTileTopEdge(AActor* tile)
 {
 	FBoxSphereBounds bounds = GetTileBounds(tile);
@@ -62,12 +79,12 @@ FBoxSphereBounds AEFMGGameMode::GetTileBounds(AActor* tile)
 	tile->GetComponents(meshes);
 	for (auto m : meshes)
 	{
-		FString terrainName = "Terrain";
+		FString terrainName = "Terrain ";
 		if (m->GetName() == terrainName)
 			return m->Bounds;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("No Terrain named static mech in tile blueprint"));
+	UE_LOG(LogTemp, Warning, TEXT("No Terrain named static mech in tile blueprint "));
 	return FBoxSphereBounds();
 }
 
