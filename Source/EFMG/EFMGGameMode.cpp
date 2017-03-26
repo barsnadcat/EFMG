@@ -17,6 +17,8 @@ AEFMGGameMode::AEFMGGameMode()
 void AEFMGGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	for (int i = 0; i < 9; i++)
+		mEnd = SpawnTile(mEnd);
 }
 
 void LogActorBounds(AActor* tile, bool colliding)
@@ -29,41 +31,43 @@ void LogActorBounds(AActor* tile, bool colliding)
 
 void AEFMGGameMode::Tick(float DeltaSeconds)
 {
-	// Move tiles
-	// Spawn tiles
-	if (mTiles.Num() == 0)
-		SpawnTile();
-	else
+	UWorld* const world = GetWorld();
+	if (!world)
+		return;
+	
+	// Get player pos
+	FVector pos = world->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+	
+	// Get distance to the course end
+	float len = FVector::Dist(mEnd, pos);
+
+	if (len < 500.f)
 	{
-		AActor* tile = mTiles[0];
-		if (!tile->IsPendingKill())
-		{
+		// Spawn new tile
+		mEnd = SpawnTile(mEnd);
+		// Remove last tile
+		AActor* lastTile = mTiles.Pop();
+		world->DestroyActor(lastTile);
 
-			FVector location = tile->GetActorLocation();
-			UE_LOG(LogTemp, Warning, TEXT("Location %.2f %2.f %2f"), location.X, location.Y, location.Z);
-			LogActorBounds(tile, true);
-			LogActorBounds(tile, false);
-		}
-
-		//if (GetTileTopEdge(mTiles[0]) > 0)
-		//	SpawnTile();
-	}
-	// Remove bottom ones
+	}	
 }
 
-void AEFMGGameMode::SpawnTile()
+FVector AEFMGGameMode::SpawnTile(FVector spawnLocation)
 {
 	UWorld* const world = GetWorld();
 	if (world)
 	{
 		if (tileClass)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Spawn tile at %.2f %2.f %2f"), spawnLocation.X, spawnLocation.Y, spawnLocation.Z);
+
 			const FRotator spawnRotation(0, 180, 0);
-			const FVector spawnLocation;
 			AActor* newTile = world->SpawnActor(tileClass, &spawnLocation, &spawnRotation);
 			mTiles.Insert(newTile, 0);
+			return spawnLocation + FVector(100.f, 0, 0);
 		}
 	}
+	return FVector();
 
 }
 

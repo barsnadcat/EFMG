@@ -19,10 +19,11 @@ private:
 	FBoxSphereBounds GetTileBounds(AActor* tile);
 	float GetTileLength(AActor* tile);
 	float GetTileTopEdge(AActor* tile);
-	void SpawnTile();
+	FVector SpawnTile(FVector spawnLocation);
 private:
 	UClass*      tileClass = NULL;
 
 	UPROPERTY()
 	TArray<AActor*> mTiles;
+	FVector mEnd;
 };
