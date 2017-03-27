@@ -17,7 +17,7 @@ AEFMGGameMode::AEFMGGameMode()
 void AEFMGGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 3; i++)
 		mEnd = SpawnTile(mEnd);
 }
 
@@ -41,7 +41,7 @@ void AEFMGGameMode::Tick(float DeltaSeconds)
 	// Get distance to the course end
 	float len = FVector::Dist(mEnd, pos);
 
-	if (len < 500.f)
+	if (len < 10000.f)
 	{
 		// Spawn new tile
 		mEnd = SpawnTile(mEnd);
