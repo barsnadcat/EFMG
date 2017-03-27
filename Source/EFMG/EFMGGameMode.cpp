@@ -64,7 +64,7 @@ FVector AEFMGGameMode::SpawnTile(FVector spawnLocation)
 			const FRotator spawnRotation(0, 180, 0);
 			AActor* newTile = world->SpawnActor(tileClass, &spawnLocation, &spawnRotation);
 			mTiles.Insert(newTile, 0);
-			return spawnLocation + FVector(100.f, 0, 0);
+			return spawnLocation + FVector(10000.f, 0, 0);
 		}
 	}
 	return FVector();
